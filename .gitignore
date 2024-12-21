@@ -1,0 +1,10 @@
+/.vscode
+
+/bin
+/pkg
+
+/src/golang.org
+
+*.exe
+*.log
+*.rdb
