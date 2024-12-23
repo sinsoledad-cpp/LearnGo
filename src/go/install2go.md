@@ -50,6 +50,13 @@ https://golang.cx/
 
 [码神社区go-redis](https://www.mszlu.com/docs/go/go-redis/01/01.html#_1-%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B)
 
+[redis在线入门，学习使用平台](http://try.redis.io/)
+
+[redis 中文资料站](http://www.redis.cn/)
+
+[redis-菜鸟教程](https://www.runoob.com/redis/redis-tutorial.html)
+
+
 ## 软件
 
 [Postman](https://www.getpostman.com/)
