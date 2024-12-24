@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fengfengzhidao/grpc/04duo/grpc_proto/duo_proto"
+	"github.com/fengfengzhidao/grpc/04servers/grpc_proto/duo_proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

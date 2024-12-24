@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
-	"github.com/fengfengzhidao/grpc/04duo/grpc_proto/duo_proto"
 	"log"
 	"net"
+
+	"github.com/fengfengzhidao/grpc/04servers/grpc_proto/duo_proto"
+	"google.golang.org/grpc"
 )
 
 type VideoServer struct {
