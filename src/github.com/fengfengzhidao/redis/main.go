@@ -9,5 +9,6 @@ func main() {
 	// RedisZset()
 	// PipeLine1()
 	// PipeLine2()
-	PipeLine3()
+	// PipeLine3()
+	RedisWatch()
 }

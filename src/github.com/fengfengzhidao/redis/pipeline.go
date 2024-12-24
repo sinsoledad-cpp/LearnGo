@@ -30,7 +30,7 @@ func PipeLine2() {
 	fmt.Println(DB.Get("price").Val())
 }
 
-func PipeLine3() {
+func PipeLine3() { //超级不建议使用
 	DB.Pipelined(func(tx redis.Pipeliner) error {
 		tx.Set("price", 100, 0)
 		val := tx.Get("price")
