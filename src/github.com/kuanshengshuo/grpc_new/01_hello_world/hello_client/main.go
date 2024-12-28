@@ -7,13 +7,16 @@ import (
 
 	pb "github.com/kuanshengshuo/grpc_new/01_hello_world/hello_server/proto"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 )
 
 func main() {
+	creds, _ := credentials.NewClientTLSFromFile("D:\\Code\\Go\\src\\github.com\\kuanshengshuo\\grpc_new\\01_hello_world\\key\\test.pem",
+		"*.kuangstudy.com")
 	// 连接到server端,此处禁用安全传输,没有加密和验证
 	// conn, err := grpc.Dial(":8080", grpc.WithInsecure())//老方法
-	conn, err := grpc.Dial(":8080", grpc.WithTransportCredentials(insecure.NewCredentials())) //新方法
+	// conn, err := grpc.Dial(":8080", grpc.WithTransportCredentials(insecure.NewCredentials())) //新方法
+	conn, err := grpc.Dial(":8080", grpc.WithTransportCredentials(creds))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}

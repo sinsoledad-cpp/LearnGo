@@ -7,6 +7,7 @@ import (
 
 	pb "github.com/kuanshengshuo/grpc_new/01_hello_world/hello_server/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 // hello server
@@ -20,10 +21,17 @@ func (s *server) SayHello(cxt context.Context, req *pb.HelloRequest) (*pb.HelloR
 }
 
 func main() {
+	//====:
+	//TSL认证
+	//====:
+	//两个参数分别是 cretFile ，keyFile
+	//自签名证书文件和私钥文件
+	// 注意请用绝对路径
+	creds, _ := credentials.NewServerTLSFromFile("D:\\Code\\Go\\src\\github.com\\kuanshengshuo\\grpc_new\\01_hello_world\\key\\test.pem", "D:\\Code\\Go\\src\\github.com\\kuanshengshuo\\grpc_new\\01_hello_world\\key\\test.key")
 	// 开启端口
 	listen, _ := net.Listen("tcp", ":8080")
 	// 创建grpc server
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(grpc.Creds(creds))
 	// 注册服务(在grpc server中注册我们自己编写的服务)
 	pb.RegisterSayHelloServer(grpcServer, &server{})
 	// 开启服务
