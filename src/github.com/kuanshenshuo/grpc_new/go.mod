@@ -1,4 +1,4 @@
-module github.com/kuanshengshuo/grpc_new
+module github.com/kuanshenshuo/grpc_new
 
 go 1.23.2
 

@@ -128,3 +128,34 @@ test.csr是上面生成的证书请求文件。ca.crt/server.key是CA证书文�
 openssl x509 -req -days 365 -in test.csr -out test.pem -CA server.crt -CAkey server.key -CAcreateserial -extfile ./openssl.cnf -extensions v3_req
 
 openssl x509 -req -days 365 -in test.csr -out test.pem -CA server.crt -CAkey server.key -CAcreateserial -extfile ./openssl.cfg -extensions v3_req
+
+# Token认证
+
+我们先看一个gRPC提供我们的一个接口,这个接口中有两个方法，接口位于credentials 包下，这个接口需要客户端来实现
+
+```go
+type PerRPCcredentials interface{
+    RequireTransportsecurity() bool
+    GetRequestMetadata(ctx context.context, uri ...string)(map[string]string, error)
+}
+type PerRPCCredentials interface {
+	// GetRequestMetadata gets the current request metadata, refreshing tokens
+	// if required. This should be called by the transport layer on each
+	// request, and the data should be populated in headers or other
+	// context. If a status code is returned, it will be used as the status for
+	// the RPC (restricted to an allowable set of codes as defined by gRFC
+	// A54). uri is the URI of the entry point for the request.  When supported
+	// by the underlying implementation, ctx can be used for timeout and
+	// cancellation. Additionally, RequestInfo data will be available via ctx
+	// to this call.  TODO(zhaoq): Define the set of the qualified keys instead
+	// of leaving it as an arbitrary string.
+	GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error)
+	// RequireTransportSecurity indicates whether the credentials requires
+	// transport security.
+	RequireTransportSecurity() bool
+}
+```
+
+第一个方法作用是获取元数据信息，也就是客户端提供的key,value对，context用于控制超时和取消，uri是请求入口处的url
+
+第二个方法的作用是否需要基于 TLS 认证进行安全传输，如果返回值是true，则必须加上TLS验证，返回值是false则不用。
