@@ -56,7 +56,13 @@ https://golang.cx/
 
 [redis-菜鸟教程](https://www.runoob.com/redis/redis-tutorial.html)
 
+[go-zero官网](https://go-zero.dev/docs/concepts/overview)
+
 [fengfengzhidao](https://docs.fengfengzhidao.com/#/?id=fengfeng-docs-%e6%9e%ab%e6%9e%ab%e7%9f%a5%e9%81%93%e5%ae%98%e6%96%b9%e6%96%87%e6%a1%a3)
+
+[fengfengzhidao-go-zero](http://www.fengfengzhidao.com/article/JdnccYsBEG4v2tWkF203)
+
+[fengfengzhidao-go-gorm](https://www.fengfengzhidao.com/special/4/56)
 
 ### grpc
 
