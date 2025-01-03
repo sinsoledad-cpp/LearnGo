@@ -5,3 +5,5 @@
 [go-zero之etcd](https://www.fengfengzhidao.com/article/M9nccYsBEG4v2tWk2G0h)
 
 [最简单的go-zero demo](https://www.fengfengzhidao.com/article/PNndcYsBEG4v2tWkOG3k)
+
+[go-zero之api服务](https://www.fengfengzhidao.com/article/QtnecYsBEG4v2tWkRm3l)
