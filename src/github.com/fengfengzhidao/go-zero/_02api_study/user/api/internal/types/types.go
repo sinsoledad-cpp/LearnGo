@@ -4,20 +4,19 @@
 package types
 
 type LoginRequest struct {
-	UserName string `json:"userName"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-type Response struct {
+type LoginResponse struct {
 	Code int    `json:"code"`
 	Data string `json:"data"`
 	Msg  string `json:"msg"`
 }
 
 type UserInfo struct {
-	UserName string `json:"userName"`
-	Addr     string `json:"addr"`
-	Id       uint   `json:"id"`
+	UserId   uint   `json:"user_id"`
+	Username string `json:"username"`
 }
 
 type UserInfoResponse struct {

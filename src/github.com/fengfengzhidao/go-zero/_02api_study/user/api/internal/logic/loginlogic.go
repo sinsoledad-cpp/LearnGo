@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 
 	"api/internal/svc"
 	"api/internal/types"
@@ -23,8 +24,8 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.Response, err error) {
+func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
 	// todo: add your logic here and delete this line
-
-	return
+	fmt.Println(req.Username, req.Password)
+	return &types.LoginResponse{Code: 0, Data: "xxx.xxx.xxx", Msg: "success"}, nil
 }
