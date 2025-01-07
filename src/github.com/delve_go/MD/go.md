@@ -2,6 +2,8 @@
 
 ![go的特点](image/go的特点.png)
 
+汇编代码:`go build -gcflags -S main.go`
+
 # Runtime
 
 ## Runtime是什么呢? 
@@ -229,6 +231,8 @@ go mod init github.com/imooc/moody
 
 ### 字符串
 
+#### 字符串
+
 ```go
 type stringStruct struct {
     str unsafe.Pointer
@@ -240,35 +244,92 @@ type stringStruct struct {
 - Len表示Byte数组的长度?字符个数?答案:Len表示Byte数组的长度(字节数),UTF-8
 ![字符串](image/字符串.png)
 
-### 字符编码问题
+#### 字符编码问题
 
 - 所有的字符均使用Unicode字符集
 - 使用UTF-8编码
 
-### Unicode
+#### Unicode
 
 - 一种统一的字符集
 - 囊括了159种文字的144679个字符
 - 14万个字符至少需要3个字节表示
 - 英文字母均排在前128个
 
-### UTF-8
+#### UTF-8
 
 - Unicode的一种变长格式
 - 128个US-ASCII字符只需一个字节编码
 - 西方常用字符需要两个字节
 - 其他字符需要3个字节，极少需要4个字节
 
-### 字符串的访问
+#### 字符串的访问
 
 - 对字符串使用len方法得到的是字节数不是字符数
 - 对字符串直接使用下标访问，得到的是字节
 - 字符串被range遍历时，被解码成rune类型的字符
 - UTF-8 编码解码算法位于 runtime/utf8.go
 
-### 字符串的切分
+#### 字符串的切分
 
 - 需要切分时:`s = string([]rune(s)[:3])`
   - 转为rune数组
   - 切片
   - 转为 string
+
+### 切片
+
+#### 切片的本质是对数组的引用
+
+```go
+type slice struct {
+    array unsafe.Pointer
+    len int
+    cap int
+}
+```
+![切片](image/切片.png)
+
+#### 切片的创建
+
+- 根据数组创建:`arr[0:3] or slice[0:3]`
+- 字面量:编译时插入创建数组的代码:`slice := []int{1, 2, 3}`
+- make: 运行时创建数组:`slice := make([]int, 10)`
+![切片的创建](image/切片的创建.png)
+
+#### 切片的访问
+
+- 下标直接访问元素
+- range 遍历元素
+- len(slice)查看切片长度
+- cap(slice)查看数组容量
+
+#### 切片的追加
+
+![切片的追加](image/切片的追加.png)
+- 不扩容时，只调整len(编译器负责)
+![切片的追加-不扩容时](image/切片的追加-不扩容时.png)
+- 扩容时，编译时转为调用 runtime.growslice()
+![切片的追加-扩容时](image/切片的追加-扩容时.png)
+- 如果期望容量大于当前容量的两倍就会使用期望容量
+ - 如果当前切片的长度小于 1024，将容量翻倍
+- 如果当前切片的长度大于 1024，每次增加 25%
+- 切片扩容时，并发不安全，注意切片并发要加锁
+
+### 总结
+
+- 字符串与切片都是对底层数组的引用
+- 字符串有UTF-8变长编码的特点
+- 切片的容量和长度不同
+- 切片追加时可能需要重建底层数组
+
+
+
+
+
+
+
+
+
+
+
