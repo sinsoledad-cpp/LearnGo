@@ -2,6 +2,11 @@
 
 [李文周博客](https://www.liwenzhou.com/posts/Go/install/)
 [VScode配置GO开发环境](https://blog.csdn.net/didine/article/details/142755652)
+[Git版本控制及Goland使用Git教程](https://blog.csdn.net/qq_42956653/article/details/121613703)
+
+### 插件
+
+[2022 年 11 大 GoLand 插件](https://blog.csdn.net/weixin_41020960/article/details/122078301)
 
 https://golang.cx/
 

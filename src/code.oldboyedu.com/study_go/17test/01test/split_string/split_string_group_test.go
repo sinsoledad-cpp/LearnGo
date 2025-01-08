@@ -46,7 +46,6 @@ func TestSplit02(t *testing.T) {
 				t.Fatalf("want:%#v got:%#v\n", tc.want, got)
 			}
 		})
-
 	}
 }
 

@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -46,6 +47,14 @@ func Init(cfg *setting.LogConfig, mode string) (err error) {
 	// 替换zap库中全局的logger
 	zap.ReplaceGlobals(lg)
 	return
+}
+
+func Close() {
+	err := zap.L().Sync()
+	if err != nil {
+		zap.L().Error("zap close failed", zap.Error(err))
+		fmt.Println("zap close failed", zap.Error(err))
+	}
 }
 
 // func Init() (err error) {

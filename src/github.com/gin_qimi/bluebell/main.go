@@ -49,7 +49,8 @@ func main() {
 		fmt.Printf("init logger failed, err:%v\n", err)
 		return
 	}
-	defer zap.L().Sync()
+	// defer zap.L().Sync()
+	defer logger.Close()
 	zap.L().Debug("logger init success...")
 	// 3. 初始化MySQL连接
 	if err := mysql.Init(setting.Conf.MySQLConfig); err != nil {
