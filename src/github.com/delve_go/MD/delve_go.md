@@ -855,3 +855,15 @@ type slice struct {
 
 # 高并发下的锁
 
+- sync.Mutex:互斥锁
+- sync.RWMutex:读写锁
+- sync.WaitGroup:等待组
+- sync.Once:初始化
+
+## 锁的基础是什么?
+
+### atomic 操作
+
+- 原子操作是一种硬件层面加锁的机制
+- 保证操作一个变量的时候，其他协程/线程无法访问
+- 只能用于简单变量的简单操作
