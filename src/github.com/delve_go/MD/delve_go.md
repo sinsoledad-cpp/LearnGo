@@ -928,7 +928,46 @@ type slice struct {
 - 锁竞争严重时，互斥锁进入饥饿模式
 - 饥饿模式没有自旋等待，有利于公平
 
-## 使用经验
+### 使用经验
 
 - 减少锁的使用时间
 - 善用defer确保锁的释放
+
+## 只让你看，不让你改，能实现吗?
+
+### 多个协程同时只读
+
+- 只读时，让其他人不能修改即可
+- 只读时，多协程可以共享读
+- 只读时，不需要互斥锁
+
+### 读写锁
+
+![读写锁](image/读写锁.png)
+
+#### 读写锁需求
+
+- 每个锁分为读锁和写锁，写锁互斥
+- 没有加写锁时，多个协程都可以加读锁
+- 加了写锁时，无法加读锁，读协程排队等待
+- 加了读锁，写锁排队等待
+
+#### 实现读写锁
+
+```go
+type RWMutex struct {
+    W Mutex
+    writerSem uint32
+    readerSem uint32
+    readerCount int32
+    readerWait int32
+}
+```
+
+- w:互斥锁作为写锁
+- writerSem:作为写协程队列
+- readerSem:作为读协程队列
+- readerCount:正值:正在读的协程负值:加了写锁
+- readerWait:写锁应该等待读协程个数
+
+![RWMutex](image/RWMutex.png)
