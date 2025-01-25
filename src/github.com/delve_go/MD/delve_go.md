@@ -971,3 +971,109 @@ type RWMutex struct {
 - readerWait:写锁应该等待读协程个数
 
 ![RWMutex](image/RWMutex.png)
+
+##### 加写锁
+
+- 先加mutex写锁，若已经被加写锁会阻塞等待
+- 将readerCount变为负值，阻塞读锁的获取
+- 计算需要等待多少个读协程释放
+- 如果需要等待读协程释放，陷入writerSem
+
+##### 解写锁
+
+- 将readerCount变为正值，允许读锁的获取
+- 释放在readerSem中等待的读协程
+- 解锁mutex
+
+##### 加读锁
+
+- 将给readerCount无脑加一
+- 如果readerCount是正数，加锁成功
+- 如果readerCount是负数，说明被加了写锁，陷入readerSem
+
+##### 解读锁
+
+- 给readerCount减
+- 如果readercount是正数，解锁成功
+- 如果readerCount是负数，有写锁在排队
+  - 如果自己是readerWait的最后一个，唤醒写协程
+
+#### 使用经验
+
+- RW锁适合读多写少的场景，减少锁冲突
+
+#### 总结
+
+- Mutex用来写协程之间互斥等待
+- 读协程使用readerSem等待写锁的释放
+- 写协程使用writerSem等待读锁的释放
+- readerCount记录读协程个数
+- readerWait记录写协程之前的读协程个数
+
+## 如何通过WaitGroup互相等待?
+
+### 需求
+
+- 实际业务中，一个(组)协程需要等待另一组协程完成
+
+### WaitGroup
+
+![WaitGroup](image/WaitGroup.png)
+
+#### Wait()
+
+- 如果被等待的协程没了，直接返回
+- 否则，waiter加一，陷入sema
+
+#### Done()
+
+- 被等待协程做完，给counter减一
+- 通过Add(-1)实现
+
+#### Add()
+
+- add counter
+- 被等待协程没做完，或者没人在等待，返回
+- 被等待协程都做完，且有人在等待，唤醒所有sema中的协程
+
+### 总结
+
+- WaitGroup实现了一组协程等待另一组协程
+- 等待的协程陷入sema并记录个数
+- 被等待的协程计数归零时，唤醒所有sema中的协程
+
+## 一段代码只能执行一次，怎么实现?
+
+### 需求
+
+- 整个程序运行过程中，代码只执行一次
+- 用来进行一些初始化的操作
+
+### 思路
+
+- 找一个变量记录一下，从0变成1就不再做了
+
+#### 思路1: Atomic
+
+- 做法:CAS改值，成功就做
+- 优点:算法非常简单
+- 问题:多个协程竞争CAS改值会造成性能问题
+
+#### 思路2:Mutex
+
+- 争抢一个mutex，抢不到的陷入sema休眠
+- 抢到的执行代码，改值，释放锁
+- 其他协程唤醒后判断值已经修改，直接返回
+
+### sync.once
+
+- 先判断是否已经改值
+- 没改，尝试获取锁
+- 获取到锁的协程执行业务，改值，解锁
+- 冲突协程唤醒后直接返回
+
+# 高并发下的通信方式:Channel 管道
+
+- Channel 理念
+- Channel结构
+- Channel 底层原理
