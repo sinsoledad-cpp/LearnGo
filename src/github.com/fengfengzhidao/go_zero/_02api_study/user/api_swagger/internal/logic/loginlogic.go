@@ -3,10 +3,9 @@ package logic
 import (
 	"context"
 
-	"api_jwt/internal/svc"
-	"api_jwt/internal/types"
+	"api_swagger/internal/svc"
+	"api_swagger/internal/types"
 
-	"github.com/fengfengzhidao/go-zero/common/jwts"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -16,6 +15,7 @@ type LoginLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 用户登录
 func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic {
 	return &LoginLogic{
 		Logger: logx.WithContext(ctx),
@@ -26,14 +26,6 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(req *types.LoginRequest) (resp string, err error) {
 	// todo: add your logic here and delete this line
-	auth := l.svcCtx.Config.Auth
-	token, err := jwts.GenToken(jwts.JwtPayLoad{
-		UserID:   1,
-		Username: "枫枫",
-		Role:     1,
-	}, auth.AccessSecret, auth.AccessExpire)
-	if err != nil {
-		return "", err
-	}
-	return token, err
+
+	return
 }

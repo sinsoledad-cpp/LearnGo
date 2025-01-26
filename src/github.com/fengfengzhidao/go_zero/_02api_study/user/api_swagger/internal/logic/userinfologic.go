@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 
-	"api_jwt/internal/svc"
-	"api_jwt/internal/types"
+	"api_swagger/internal/svc"
+	"api_swagger/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -17,6 +15,7 @@ type UserInfoLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 获取用户信息
 func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfoLogic {
 	return &UserInfoLogic{
 		Logger: logx.WithContext(ctx),
@@ -28,13 +27,5 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResponse, err error) {
 	// todo: add your logic here and delete this line
 
-	userId := l.ctx.Value("user_id").(json.Number)
-	fmt.Printf("%v, %T, \n", userId, userId)
-	username := l.ctx.Value("username").(string)
-	uid, _ := userId.Int64()
-
-	return &types.UserInfoResponse{
-		UserId:   uint(uid),
-		Username: username,
-	}, nil
+	return
 }

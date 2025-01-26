@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"api_jwt/internal/config"
+	"api_swagger/internal/config"
 )
 
 type ServiceContext struct {

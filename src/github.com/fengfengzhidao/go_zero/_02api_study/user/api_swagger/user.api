@@ -8,27 +8,27 @@ type UserInfoResponse {
 	Username string `json:"username"`
 }
 
-@server(
-  prefix: /api/users
+@server (
+	prefix: /api/users
 )
 service users {
-  @doc(
-    summary: "用户登录"
-  )
-  @handler login
-  post /login (LoginRequest) returns (string)
+	@doc (
+		summary: "用户登录"
+	)
+	@handler login
+	post /login (LoginRequest) returns (string)
 }
 
-@server(
-  jwt: Auth
-  prefix: /api/users
+@server (
+	jwt:    Auth
+	prefix: /api/users
 )
 service users {
-  @doc(
-    summary: "获取用户信息"
-  )
-  @handler userInfo
-  get /info returns (UserInfoResponse)
+	@doc (
+		summary: "获取用户信息"
+	)
+	@handler userInfo
+	get /info returns (UserInfoResponse)
 }
 
 // goctl api go -api user.api -dir . 

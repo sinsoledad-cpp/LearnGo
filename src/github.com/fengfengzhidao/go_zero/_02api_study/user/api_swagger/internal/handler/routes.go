@@ -6,7 +6,7 @@ package handler
 import (
 	"net/http"
 
-	"api_jwt/internal/svc"
+	"api_swagger/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -15,6 +15,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 用户登录
 				Method:  http.MethodPost,
 				Path:    "/login",
 				Handler: loginHandler(serverCtx),
@@ -26,6 +27,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 获取用户信息
 				Method:  http.MethodGet,
 				Path:    "/info",
 				Handler: userInfoHandler(serverCtx),

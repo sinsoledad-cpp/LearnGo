@@ -3,12 +3,13 @@ package handler
 import (
 	"net/http"
 
-	"api_jwt/internal/logic"
-	"api_jwt/internal/svc"
+	"api_swagger/internal/logic"
+	"api_swagger/internal/svc"
 
 	"github.com/fengfengzhidao/go-zero/common/response"
 )
 
+// 获取用户信息
 func userInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := logic.NewUserInfoLogic(r.Context(), svcCtx)
