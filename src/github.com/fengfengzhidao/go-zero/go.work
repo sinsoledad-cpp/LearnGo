@@ -1,6 +1,0 @@
-go 1.23.2
-
-use (
-	./_02api_study/user/api_v2
-	./common
-)

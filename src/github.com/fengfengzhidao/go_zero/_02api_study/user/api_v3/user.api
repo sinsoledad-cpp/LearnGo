@@ -8,16 +8,12 @@ type UserInfoResponse {
 	Username string `json:"username"`
 }
 
-@server(
-	prefix: /api/users
-)
-
 service users {
 	@handler login
-	post /login (LoginRequest) returns (string)
+	post /api/users/login (LoginRequest) returns (string)
 
 	@handler userInfo
-	get /info returns (UserInfoResponse)
+	get /api/users/info returns (UserInfoResponse)
 }
 
 // goctl api go -api user.api -dir .

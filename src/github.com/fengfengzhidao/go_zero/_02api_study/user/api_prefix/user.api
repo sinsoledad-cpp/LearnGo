@@ -8,10 +8,9 @@ type UserInfoResponse {
 	Username string `json:"username"`
 }
 
-@server(
+@server (
 	prefix: /api/users
 )
-
 service users {
 	@handler login
 	post /login (LoginRequest) returns (string)
