@@ -2,7 +2,10 @@ module github.com/fengfengzhidao/go-zero/common
 
 go 1.23.2
 
-require github.com/zeromicro/go-zero v1.7.6
+require (
+	github.com/golang-jwt/jwt/v4 v4.5.1
+	github.com/zeromicro/go-zero v1.7.6
+)
 
 require (
 	github.com/fatih/color v1.18.0 // indirect
