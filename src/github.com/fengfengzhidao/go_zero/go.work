@@ -8,5 +8,7 @@ use (
 	./_02api_study/user/api_v3
 	./_03model_study/user/api
 	./_03model_study/user/model
+	./_03model_study/user_model/api_model
+	./_03model_study/user_model/models
 	./common
 )
