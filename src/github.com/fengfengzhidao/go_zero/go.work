@@ -10,5 +10,7 @@ use (
 	./_03model_study/user/model
 	./_03model_study/user_model/api_model
 	./_03model_study/user_model/models
+	./_04rpc_study/user_gorm/modelss
+	./_04rpc_study/user_gorm/rpc
 	./common
 )
