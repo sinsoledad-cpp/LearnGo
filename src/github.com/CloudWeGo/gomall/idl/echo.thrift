@@ -11,3 +11,6 @@ struct Response {
 service Echo {
     Response Echo(1: Request req)
 }
+
+
+// cwgo server -I ../../idl --type RPC --module github.com/CloudWeGo/gomall/demo/demo_thrift --service demo_thrift --idl ../../idl/echo.thrift

@@ -72,7 +72,7 @@ source ./autocomplete/zsh_autocomplete
 
 `sudo cp -a google /usr/local/include`
 
-[Protocol ](https://github.com/protocolbuffers/protobuf/releases/tag/v28.3)
+[Protocol](https://github.com/protocolbuffers/protobuf/releases/tag/v28.3)
 
 [ProtoBuf](https://blog.csdn.net/weixin_74531333/article/details/140469169)
 
