@@ -1,5 +1,29 @@
 # 电商项目
 
+## 开发环境
+
+Visual Studio Code
+Plugins
+- Go
+- Golang Tools
+- Docker
+- MySQL
+- Material lcon Theme
+- YAML
+- vscode-proto3
+- Makefile Tools
+
+Oh My Zsh
+Plugins
+- zsh-syntax-highlighting
+- zsh-autosuggestions
+
+## Hertz
+
+**导入:**`go get -u github.com/cloudwego/hertz`
+
+[官网](https://www.cloudwego.io/zh/docs/hertz/getting-started/)
+
 ## 手脚架
 
 ### Thrift
