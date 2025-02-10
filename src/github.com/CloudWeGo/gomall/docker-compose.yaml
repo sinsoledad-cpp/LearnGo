@@ -3,4 +3,4 @@ services:
   consul:
     image: 'hashicorp/consul'
     ports:
-      - 8081:8081
+      - 8500:8500
