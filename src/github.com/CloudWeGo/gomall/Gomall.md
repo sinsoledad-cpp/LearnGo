@@ -78,9 +78,14 @@ source ./autocomplete/zsh_autocomplete
 
 `cwgo server -I ../../idl --type RPC --module projects/gomall/demo/demo_proto --service demo_proto --idl ../../idl/echo.proto`
 
-###
+### cloudwego
 
 https://www.cloudwego.io/docs/hertz/tutorials/toolkit/annotation/
 
+[hertz](https://www.cloudwego.io/docs/hertz/)
+
 ## 服务注册与服务发现 
 
+### consul
+
+https://hub.docker.com/r/hashicorp/consul?uuid=40228A54-EB5B-4483-B081-6E4539FF95E5
