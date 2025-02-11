@@ -120,4 +120,4 @@ from secret
 
 ## ORM
 
-[gorm中文文档    ](https://gorm.golang.ac.cn/docs/models.html)
+[gorm中文文档](https://gorm.golang.ac.cn/docs/models.html)
