@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	pbapi "github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi"
+	"github.com/bytedance/gopkg/cloud/metainfo"
 )
 
 type EchoService struct {
@@ -16,6 +18,8 @@ func NewEchoService(ctx context.Context) *EchoService {
 // Run create note info
 func (s *EchoService) Run(req *pbapi.Request) (resp *pbapi.Response, err error) {
 	// Finish your business logic.
+	clientName, ok := metainfo.GetPersistentValue(s.ctx, "CLIENT_NAME")
+	fmt.Println(clientName, ok)
 
 	return &pbapi.Response{
 		Message: req.Message,

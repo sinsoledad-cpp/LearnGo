@@ -121,3 +121,37 @@ from secret
 ## ORM
 
 [gorm中文文档](https://gorm.golang.ac.cn/docs/models.html)
+
+## 编码规范
+
+### code style
+
+#### style guide
+
+https://github.com/uber-go/guide/blob/master/style.md
+
+https://protobuf.dev/programming-guides/style/
+
+#### tools
+
+https://github.com/mvdan/gofumpt
+
+https://golangci-lint.run/
+
+### http codes
+
+#### Http response status codes
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+- Informational responses(100-199)
+- Successful responses(200-299)
+- Redirection messages(300-399)
+- Client error responses (400-499)
+- Server error responses(500-599)
+
+
+
+
+
+

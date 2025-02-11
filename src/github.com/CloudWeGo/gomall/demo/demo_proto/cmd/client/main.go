@@ -3,28 +3,40 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 
+	"github.com/CloudWeGo/gomall/demo/demo_proto/conf"
 	"github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi"
 	"github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi/echoservice"
+	"github.com/bytedance/gopkg/cloud/metainfo"
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/cloudwego/kitex/pkg/transmeta"
 	consul "github.com/kitex-contrib/registry-consul"
 )
 
 func main() {
 
-	r, err := consul.NewConsulResolver("127.0.0.1:8500")
+	r, err := consul.NewConsulResolver(conf.GetConf().Registry.RegistryAddress[0])
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	c, err := echoservice.NewClient("demo_proto", client.WithResolver(r))
+	// c, err := echoservice.NewClient("demo_proto", client.WithResolver(r),
+	// 	client.WithTransportProtocol(transport.GRPC),
+	// 	client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	// )
+	c, err := echoservice.NewClient("demo_proto", client.WithResolver(r),
+		// client.WithTransportProtocol(transport.GRPC), 不使用 gRPC,在win11上
+		client.WithShortConnection(), // 使用短链接
+		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+	)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
-	res, err := c.Echo(context.TODO(), &pbapi.Request{Message: "hello"})
+	ctx := metainfo.WithPersistentValue(context.Background(), "CLIENT_NAME", "demo_proto_client")
+	res, err := c.Echo(ctx, &pbapi.Request{Message: "hello"})
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	fmt.Printf("%v\n", res)
