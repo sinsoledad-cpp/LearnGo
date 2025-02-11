@@ -89,3 +89,26 @@ https://www.cloudwego.io/docs/hertz/tutorials/toolkit/annotation/
 ### consul
 
 https://hub.docker.com/r/hashicorp/consul?uuid=40228A54-EB5B-4483-B081-6E4539FF95E5
+
+## 配置
+
+### 方法
+
+Env Config
+
+Linux env
+export APP_ENV=online
+
+.env file
+APP_ENV=online
+
+Docker env
+ENV GO_ENV=online
+
+K8s env
+direct
+from status
+from configmap
+from secret
+
+https://github.com/joho/godotenv
