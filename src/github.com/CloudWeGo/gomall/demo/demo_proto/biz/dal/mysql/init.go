@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/CloudWeGo/gomall/demo/demo_proto/biz/model"
 	"github.com/CloudWeGo/gomall/demo/demo_proto/conf"
 
 	"gorm.io/driver/mysql"
@@ -31,18 +32,17 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	
+	DB.AutoMigrate(&model.User{})
 
-	type Version struct {
-		Version string
-	}
-
-	var v Version
-
-	err = DB.Raw("select version() as version").Scan(&v).Error
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(v)
+	// 打印版本号
+	//	type Version struct {
+	//		Version string
+	//	}
+	// var v Version
+	// err = DB.Raw("select version() as version").Scan(&v).Error
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	// fmt.Println(v)
 }

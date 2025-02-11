@@ -1,5 +1,10 @@
 # 电商项目
 
+## 使用
+
+docker compose up -d
+docker compose down
+
 ## 开发环境
 
 Visual Studio Code
@@ -111,4 +116,8 @@ from status
 from configmap
 from secret
 
-https://github.com/joho/godotenv
+[加载.env文件的库](https://github.com/joho/godotenv)
+
+## ORM
+
+[gorm中文文档    ](https://gorm.golang.ac.cn/docs/models.html)
