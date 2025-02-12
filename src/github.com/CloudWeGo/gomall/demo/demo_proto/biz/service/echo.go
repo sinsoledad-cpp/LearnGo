@@ -21,7 +21,9 @@ func (s *EchoService) Run(req *pbapi.Request) (resp *pbapi.Response, err error) 
 	// Finish your business logic.
 	clientName, ok := metainfo.GetPersistentValue(s.ctx, "CLIENT_NAME")
 	fmt.Println(clientName, ok)
+	
 	if req.Message == "error" {
+		fmt.Println(kerrors.NewGRPCBizStatusError(1004001, "client param error"))
 		return nil, kerrors.NewGRPCBizStatusError(1004001, "client param error")
 	}
 

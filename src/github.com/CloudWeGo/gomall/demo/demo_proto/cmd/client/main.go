@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/CloudWeGo/gomall/demo/demo_proto/conf"
@@ -9,6 +10,7 @@ import (
 	"github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi/echoservice"
 	"github.com/bytedance/gopkg/cloud/metainfo"
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	consul "github.com/kitex-contrib/registry-consul"
@@ -34,8 +36,15 @@ func main() {
 	}
 
 	ctx := metainfo.WithPersistentValue(context.Background(), "CLIENT_NAME", "demo_proto_client")
-	res, err := c.Echo(ctx, &pbapi.Request{Message: "hello"})
+	res, err := c.Echo(ctx, &pbapi.Request{Message: "error"})
+	fmt.Println(res)
+	fmt.Println(err)
+	var bizErr *kerrors.GRPCBizStatusError
 	if err != nil {
+		ok := errors.As(err, &bizErr)
+		if ok {
+			fmt.Printf("%#v\n", bizErr)
+		}
 		klog.Fatal(err)
 	}
 
