@@ -8,6 +8,7 @@ import (
 	"github.com/CloudWeGo/gomall/demo/demo_proto/conf"
 	"github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi"
 	"github.com/CloudWeGo/gomall/demo/demo_proto/kitex_gen/pbapi/echoservice"
+	"github.com/CloudWeGo/gomall/demo/demo_proto/middleware"
 	"github.com/bytedance/gopkg/cloud/metainfo"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/kerrors"
@@ -30,6 +31,7 @@ func main() {
 		// client.WithTransportProtocol(transport.GRPC), 不使用 gRPC,在win11上
 		client.WithShortConnection(), // 使用短链接
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+		client.WithMiddleware(middleware.Middleware),
 	)
 	if err != nil {
 		panic(err)
@@ -39,6 +41,7 @@ func main() {
 	res, err := c.Echo(ctx, &pbapi.Request{Message: "error"})
 	fmt.Println(res)
 	fmt.Println(err)
+	// 返回err有bug
 	var bizErr *kerrors.GRPCBizStatusError
 	if err != nil {
 		ok := errors.As(err, &bizErr)
