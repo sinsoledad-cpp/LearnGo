@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	home "github.com/CloudWeGo/gomall/app/frontend/hertz_gen/frontend/home"
 	"github.com/cloudwego/hertz/pkg/app"
@@ -23,7 +22,7 @@ func (h *HomeService) Run(req *home.Empty) (map[string]any, error) {
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
-	fmt.Println("home service")
+	// fmt.Println("home service")
 	var resp = make(map[string]any)
 	items := []map[string]any{
 		{"Name": "T-shirt-1", "Price": "100", "Picture": "/static/image/t-shirt-1.jpg"},
@@ -33,7 +32,7 @@ func (h *HomeService) Run(req *home.Empty) (map[string]any, error) {
 		{"Name": "T-shirt-5", "Price": "140", "Picture": "/static/image/t-shirt-1.jpg"},
 		{"Name": "T-shirt-6", "Price": "150", "Picture": "/static/image/t-shirt-1.jpg"},
 	}
-	resp["Title"]="Hot Sales"
-	resp["Items"]=items
+	resp["Title"] = "Hot Sales"
+	resp["Items"] = items
 	return resp, nil
 }

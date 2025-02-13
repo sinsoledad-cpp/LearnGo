@@ -40,6 +40,10 @@ func main() {
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 
+	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-in", utils.H{"Title": "Sign In"})
+	})
+
 	h.Spin()
 }
 
