@@ -5,3 +5,8 @@ gen-demo-proto:
 .PHONY: gen-demo-thrift
 gen-demo-thrift:
 	@cd demo/demo_thrift && cwgo server -I ../../idl --type RPC --module github.com/CloudWeGo/gomall/demo/demo_thrift --service demo_thrift --idl ../../idl/echo.thrift
+
+.PHONY: gen-frontend
+gen-frontend:
+	cwgo server --type HTTP --idl ../../idl/frontend/home.proto  --service frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
+
