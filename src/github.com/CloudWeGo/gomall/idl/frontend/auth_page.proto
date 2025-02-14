@@ -27,6 +27,10 @@ service AuthService {
   rpc register(RegisterReq) returns (common.Empty) {
     option (api.post) = "/auth/register";
   }
+  rpc logout(common.Empty) returns (common.Empty) {
+    option (api.post) = "/auth/logout";
+  }
 }
 
-// cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
+// cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service
+// frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
