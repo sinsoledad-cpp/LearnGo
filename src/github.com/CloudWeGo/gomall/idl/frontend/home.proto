@@ -4,12 +4,13 @@ package frontend.home;
 
 option go_package = "frontend/home";
 
-// import "api.proto";
+import "api.proto";
+import "frontend/common.proto";
 
 message Empty {}
 
 service HomeService {
-  //   rpc Home(Empty) returns (Empty) { option (api.get) = "/"; }
+  rpc Home(common.Empty) returns (common.Empty) { option (api.get) = "/"; }
 }
 
 // cwgo server --type HTTP --idl ../../idl/frontend/home.proto  --service

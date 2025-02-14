@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package frontend.auth;
+
+option go_package = "frontend/auth";
+
+import "api.proto";
+import "frontend/common.proto";
+
+message Empty {}
+
+message LoginReq {
+  string email = 1 [ (api.form) = "email" ];
+  string password = 2 [ (api.form) = "password" ];
+}
+
+service AuthService {
+  rpc login(LoginReq) returns (common.Empty) {
+    option (api.post) = "/auth/login";
+  }
+}
+
+// cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
