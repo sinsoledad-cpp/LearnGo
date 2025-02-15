@@ -8,6 +8,7 @@ import (
 
 	"github.com/CloudWeGo/gomall/app/frontend/biz/router"
 	"github.com/CloudWeGo/gomall/app/frontend/conf"
+	"github.com/CloudWeGo/gomall/app/frontend/middleware"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -41,13 +42,14 @@ func main() {
 	})
 
 	router.GeneratedRegister(h)
+
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
 		data := utils.H{
 			"Title": "Sign In",
-			"Next":  ctx.Request.Header.Get("Referer"),
+			"Next":  ctx.Query("next"),
 		}
 		ctx.HTML(consts.StatusOK, "sign-in", data)
 	})
@@ -56,7 +58,13 @@ func main() {
 		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"Title": "Sign Up"})
 	})
 
+	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "about", utils.H{"title": "About"})
+	})
+
 	h.Spin()
+
+	middleware.Register(h)
 }
 
 func registerMiddleware(h *server.Hertz) {
