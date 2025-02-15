@@ -32,5 +32,4 @@ service AuthService {
   }
 }
 
-// cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service
-// frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
+// cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
