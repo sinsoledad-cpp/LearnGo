@@ -64,12 +64,11 @@ func main() {
 
 	h.Spin()
 
-	middleware.Register(h)
 }
 
 func registerMiddleware(h *server.Hertz) {
 	// session-redis
-	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret")) //
 	h.Use(sessions.New("cloudwego-shop", store))
 
 	// log
@@ -110,4 +109,6 @@ func registerMiddleware(h *server.Hertz) {
 
 	// cores
 	h.Use(cors.Default())
+
+	middleware.Register(h)
 }
