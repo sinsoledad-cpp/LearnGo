@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/sessions"
@@ -24,7 +23,7 @@ func Auth() app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		s := sessions.Default(c)
 		userId := s.Get("user_id")
-		fmt.Println(userId, c.FullPath())
+		// fmt.Println(userId, c.FullPath())
 		if userId == nil {
 			c.Redirect(302, []byte("/sign-in?next="+c.FullPath()))
 			c.Abort()
