@@ -11,6 +11,7 @@ require (
 	github.com/CloudWeGo/gomall/rpc_gen v0.0.0-00010101000000-000000000000
 	github.com/cloudwego/kitex v0.12.1
 	github.com/kitex-contrib/registry-consul v0.1.0
+	golang.org/x/crypto v0.22.0
 	gopkg.in/validator.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.2.2
 	gorm.io/gorm v1.25.12

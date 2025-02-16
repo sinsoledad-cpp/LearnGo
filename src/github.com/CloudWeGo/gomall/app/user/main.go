@@ -5,6 +5,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/CloudWeGo/gomall/app/user/biz/dal"
 	"github.com/CloudWeGo/gomall/app/user/conf"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -18,13 +19,19 @@ import (
 )
 
 func main() {
-	_ = godotenv.Load()
+	err := godotenv.Load()
+
+	if err != nil {
+		klog.Error(err.Error())
+	}
+
+	dal.Init()
 
 	opts := kitexInit()
 
 	svr := userservice.NewServer(new(UserServiceImpl), opts...)
 
-	err := svr.Run()
+	err = svr.Run()
 	if err != nil {
 		klog.Error(err.Error())
 	}

@@ -10,14 +10,14 @@ message RegisterReq {
   string password_confirm = 3;
 }
 
-message RegisterResp { string user_id = 1; }
+message RegisterResp { int64 user_id = 1; }
 
 message LoginReq {
   string email = 1;
   string password = 2;
 }
 
-message LoginResp { string user_id = 1; }
+message LoginResp { int64 user_id = 1; }
 
 service UserService {
   rpc Register(RegisterReq) returns (RegisterResp);
