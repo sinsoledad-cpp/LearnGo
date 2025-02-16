@@ -25,3 +25,4 @@ service UserService {
 }
 
 // cwgo client --type RPC --service user --module github.com/CloudWeGo/gomall/rpc_gen  --I ../idl --idl ../idl/user.proto
+// cwgo server --type RPC --service user --module github.com/CloudWeGo/gomall/app/user --pass "-use github.com/CloudWeGo/gomall/rpc_gen/kitex_gen"  --I ../../idl --idl ../../idl/user.proto
