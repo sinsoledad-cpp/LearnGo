@@ -24,7 +24,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/">CloudWeGo Shop</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -32,25 +32,24 @@
                                 Categories
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">T-shrit</a></li>
-                                <li><a class="dropdown-item" href="#">Sticker</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="/category/t-shirt">T-shirt</a></li>
+                                <li><a class="dropdown-item" href="/category/sticker">Sticker</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex ms-auto" role="search" action="/search" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search"
+                            value="{{ .q }}">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+
                     <div class="ms-3">
                         <i class="fa-solid fa-cart-shopping fa-xl"></i>
                     </div>
+
                     {{ if .user_id }}
                     <div class="dropdown">
                         <div class="ms-3 dropdown-toggle" data-bs-toggle="dropdown">
@@ -74,7 +73,11 @@
                 </div>
             </div>
         </nav>
+        <div class="text-bg-primary text-center">
+            <p>This Website is hosted for demo purposes only.It is not an actual shop</p>
+        </div>
     </header>
     <main style="min-height: calc(80vh);">
         <div class="container-fluid py-3">
+            <h1 class="text-center">{{$.title}}</h1>
             {{end}}

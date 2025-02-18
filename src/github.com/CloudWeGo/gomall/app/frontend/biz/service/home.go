@@ -47,7 +47,7 @@ func (h *HomeService) Run(req *common.Empty) (resp map[string]any, err error) {
 	}
 
 	return utils.H{
-		"Title": "Hot sale",
-		"Items": products.Products,
+		"title": "Hot sale",
+		"items": products.Products,
 	}, nil
 }
