@@ -3,9 +3,12 @@ package service
 import (
 	"context"
 
+	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/product"
+
 	category "github.com/CloudWeGo/gomall/app/frontend/hertz_gen/frontend/category"
-	common "github.com/CloudWeGo/gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/CloudWeGo/gomall/app/frontend/infra/rpc"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 )
 
 type CategoryService struct {
@@ -17,11 +20,18 @@ func NewCategoryService(Context context.Context, RequestContext *app.RequestCont
 	return &CategoryService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *CategoryService) Run(req *category.CategoryReq) (resp *common.Empty, err error) {
+func (h *CategoryService) Run(req *category.CategoryReq) (resp map[string]any, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
-	return
+	p, err := rpc.ProductClient.ListProducts(h.Context, &product.ListProductsReq{CategoryName: req.Category})
+	if err != nil {
+		return nil, err
+	}
+	return utils.H{
+		"Title": "Category",
+		"items": p.Products,
+	}, nil
 }
