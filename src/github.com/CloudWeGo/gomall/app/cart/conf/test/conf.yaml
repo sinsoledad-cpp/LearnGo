@@ -1,6 +1,6 @@
 kitex:
   service: "cart"
-  address: "192.168.0.104:8080"
+  address: "192.168.204.1:8083"
   log_level: info
   log_file_name: "log/kitex.log"
   log_max_size: 10

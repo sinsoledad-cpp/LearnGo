@@ -50,14 +50,14 @@ func main() {
 
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
 		data := utils.H{
-			"Title": "Sign In",
+			"title": "Sign In",
 			"Next":  ctx.Query("next"),
 		}
 		ctx.HTML(consts.StatusOK, "sign-in", data)
 	})
 
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"Title": "Sign Up"})
+		ctx.HTML(consts.StatusOK, "sign-up", utils.H{"title": "Sign Up"})
 	})
 
 	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
