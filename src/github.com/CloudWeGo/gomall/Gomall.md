@@ -150,7 +150,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 - Client error responses (400-499)
 - Server error responses(500-599)
 
+## 特殊第三方库
 
+模拟支付：`go get github.com/durango/go-credit-card`
 
 
 
