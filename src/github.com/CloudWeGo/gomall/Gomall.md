@@ -154,6 +154,6 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 模拟支付：`go get github.com/durango/go-credit-card`
 
-
+![结算支付](image/结算支付.png)
 
 
