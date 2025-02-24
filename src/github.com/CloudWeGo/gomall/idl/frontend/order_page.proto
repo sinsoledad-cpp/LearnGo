@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package frontend.order;
+
+import "api.proto";
+import "frontend/common.proto";
+
+option go_package = "/frontend/order";
+
+service OrderService {
+  rpc OrderList(common.Empty) returns (common.Empty) {
+    option (api.get) = "/order";
+  }
+}
+// cwgo server --type HTTP --idl ../../idl/frontend/order_page.proto  --service frontend -module github.com/CloudWeGo/gomall/app/frontend -I ../../idl
