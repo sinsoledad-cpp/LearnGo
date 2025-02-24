@@ -43,12 +43,10 @@
                             <a class="nav-link" href="/about">About</a>
                         </li>
                     </ul>
-                    <form class="d-flex ms-auto" role="search" action="/search" method="get">
-                        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search"
-                            value="{{ .q }}">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-
                     {{ template "cart-num" . }}
 
                     {{ if .user_id }}
@@ -58,7 +56,7 @@
                             <span>Hello</span>
                         </div>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Order Center</a></li>
+                            <li><a class="dropdown-item" href="/order">Order Center</a></li>
                             <li>
                                 <form action="/auth/logout" method="post">
                                     <button class="dropdown-item" type="submit">Logout</button>
@@ -77,6 +75,13 @@
         <div class="text-bg-primary text-center">
             <p>This Website is hosted for demo purposes only.It is not an actual shop</p>
         </div>
+
+        {{ if .error }}
+        <div class="alert alert-danger text-center" role="alert">{{ .error }}</div>
+        {{ end }}
+        {{ if .warning }}
+        <div class="alert alert-warning text-center" role="alert">{{ .warning }}</div>
+        {{ end }}
     </header>
     <main style="min-height: calc(80vh);">
         <div class="container-fluid py-3">
