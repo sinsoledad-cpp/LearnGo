@@ -4,6 +4,7 @@
 
 docker compose up -d
 docker compose down
+go run .
 
 ## 开发环境
 
