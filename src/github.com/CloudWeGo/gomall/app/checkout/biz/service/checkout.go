@@ -4,10 +4,14 @@ import (
 	"context"
 
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/order"
+	"github.com/nats-io/nats.go"
+	"google.golang.org/protobuf/proto"
 
+	"github.com/CloudWeGo/gomall/app/checkout/infra/mq"
 	"github.com/CloudWeGo/gomall/app/checkout/infra/rpc"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/checkout"
+	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/email"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/payment"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/product"
 	"github.com/cloudwego/kitex/pkg/kerrors"
@@ -107,6 +111,15 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	if err != nil {
 		return nil, err
 	}
+	data, _ := proto.Marshal(&email.EmailReq{
+		From:        "from@example.com",
+		To:          req.Email,
+		ContentType: "text/plain",
+		Subject:     "You just created an order in CloudWeGo shop",
+		Content:     "You just created an order in CloudWeGo shop",
+	})
+	msg := &nats.Msg{Subject: "email", Data: data}
+	_ = mq.Nc.PublishMsg(msg)
 
 	klog.Info(paymentResult)
 

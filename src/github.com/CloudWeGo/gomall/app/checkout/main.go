@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/CloudWeGo/gomall/app/checkout/conf"
+	"github.com/CloudWeGo/gomall/app/checkout/infra/mq"
 	"github.com/CloudWeGo/gomall/app/checkout/infra/rpc"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -18,8 +19,10 @@ import (
 )
 
 func main() {
-	opts := kitexInit()
 	rpc.InitClient()
+	mq.Init()
+
+	opts := kitexInit()
 
 	svr := checkoutservice.NewServer(new(CheckoutServiceImpl), opts...)
 
