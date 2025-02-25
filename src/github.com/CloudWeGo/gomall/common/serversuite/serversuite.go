@@ -1,8 +1,6 @@
 package serversuite
 
 import (
-	"fmt"
-
 	"github.com/CloudWeGo/gomall/common/mtl"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -18,7 +16,7 @@ type CommonServerSuite struct {
 }
 
 func (s CommonServerSuite) Options() []server.Option {
-	fmt.Println("CommonServerSuite.Options")
+	// fmt.Println("CommonServerSuite.Options")
 	opts := []server.Option{
 		server.WithMetaHandler(transmeta.ServerHTTP2Handler),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
