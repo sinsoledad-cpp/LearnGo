@@ -15,7 +15,7 @@ import (
 
 var Registry *prometheus.Registry
 
-func InitMetric(serviceName string, metricsPort string, registryAddr string) {
+func InitMetric(serviceName string, metricsPort string, registryAddr string) (registry.Registry, *registry.Info) {
 	// fmt.Println("metricsPort:", metricsPort, "registryAddr:", registryAddr, "serviceName:", serviceName)
 	Registry = prometheus.NewRegistry()
 	Registry.MustRegister(collectors.NewGoCollector())
@@ -44,4 +44,5 @@ func InitMetric(serviceName string, metricsPort string, registryAddr string) {
 	_, port, _ := net.SplitHostPort(metricsPort)
 	metricsPort = ":" + port
 	go http.ListenAndServe(metricsPort, nil) //nolint:errcheck
+	return r, registryInfo
 }
