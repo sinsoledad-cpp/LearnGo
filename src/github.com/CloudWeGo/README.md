@@ -20,11 +20,9 @@
 
 ![abort](image/abort.png)
 
-
 # BUG
 
 ## consul注册问题
-
 
 在配置文件中的address不可写为127.0.0.1,否则会出现注册失败(使用docker运行consul)
 注意：kitex中的端口号，在同一主机下的多个服务的端口号不能相同
@@ -44,7 +42,7 @@ kitex:
 
 **注意require中有时候会有残留的不需要的依赖,手动清除即可**
 
-```go.mod
+```go
 module github.com/CloudWeGo/gomall/app/cart
 
 go 1.23.2

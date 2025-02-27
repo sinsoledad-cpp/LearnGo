@@ -34,7 +34,7 @@ import (
 
 var (
 	ServiceName  = frontendUtils.ServiceName
-	MetricsPort  = conf.GetConf().Hertz.Address
+	MetricsPort  = conf.GetConf().Hertz.MetricsPort
 	RegistryAddr = conf.GetConf().Hertz.RegistryAddr
 )
 
@@ -46,7 +46,7 @@ func main() {
 	defer consul.Deregister(registryInfo)
 	rpc.Init()
 	address := conf.GetConf().Hertz.Address
-	
+
 	h := server.New(server.WithHostPorts(address),
 		server.WithTracer(prometheus.NewServerTracer("", "",
 			prometheus.WithDisableServer(true),
