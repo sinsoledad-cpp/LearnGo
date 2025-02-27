@@ -7,6 +7,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	prometheus "github.com/kitex-contrib/monitor-prometheus"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	consul "github.com/kitex-contrib/registry-consul"
 )
 
@@ -22,11 +23,14 @@ func (s CommonServerSuite) Options() []server.Option {
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 			ServiceName: s.CurrentServiceName,
 		}),
+		// prometheus中间件 在服务器端注册 Prometheus 指标收集器，并与 kitex 服务器集成以进行监控
 		server.WithTracer(prometheus.NewServerTracer("",
 			"",
 			prometheus.WithDisableServer(true),
 			prometheus.WithRegistry(mtl.Registry)),
 		),
+		// tracing中间件
+		server.WithSuite(tracing.NewServerSuite()),
 	}
 
 	// consul

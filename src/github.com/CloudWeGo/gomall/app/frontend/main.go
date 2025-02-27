@@ -48,6 +48,7 @@ func main() {
 	address := conf.GetConf().Hertz.Address
 
 	h := server.New(server.WithHostPorts(address),
+		// prometheus中间件
 		server.WithTracer(prometheus.NewServerTracer("", "",
 			prometheus.WithDisableServer(true),
 			prometheus.WithRegistry(mtl.Registry),

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"net"
 	"time"
 
@@ -27,10 +28,15 @@ var (
 func main() {
 	_ = godotenv.Load()
 
+	//prometheus中间件
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
-	
+
+	//traing
+	p := mtl.InitTracing(ServiceName)
+	defer p.Shutdown(context.Background())
+
 	dal.Init()
-	
+
 	rpc.InitClient()
 
 	opts := kitexInit()
@@ -52,6 +58,7 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithServiceAddr(addr))
 
 	opts = append(opts, server.WithSuite(
+		// prometheus中间件
 		serversuite.CommonServerSuite{
 			CurrentServiceName: ServiceName,
 			RegistryAddr:       RegistryAddr,

@@ -157,8 +157,18 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 ![结算支付](image/结算支付.png)
 
-nats golang sdk：https://github.com/nats-io/nats.go
+[nats golang sdk](https://github.com/nats-io/nats.go)
 
-kitex prometheus：https://github.com/kitex-contrib/monitor-prometheus
+### prometheus
 
-prometheus golang sdk：https://github.com/prometheus/client_golang
+[kitex prometheus](https://github.com/kitex-contrib/monitor-prometheus)
+
+[prometheus golang sdk](https://github.com/prometheus/client_golang)
+
+### opentelemetry
+
+[hertz-contrib opentelemetry](https://github.com/hertz-contrib/obs-opentelemetry)
+
+[ketix-contrib opentelemetry](https://github.com/kitex-contrib/obs-opentelemetry)
+
+[gorm opentelemetry](https://github.com/go-gorm/opentelemetry)
