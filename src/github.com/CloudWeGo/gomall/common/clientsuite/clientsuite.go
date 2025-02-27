@@ -22,7 +22,7 @@ func (s CommonClientSuite) Options() []client.Option {
 		}),
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 		client.WithTransportProtocol(transport.GRPC),
-		//tracing
+		// traceing-OpenTelemetry
 		client.WithSuite(tracing.NewClientSuite()),
 	}
 

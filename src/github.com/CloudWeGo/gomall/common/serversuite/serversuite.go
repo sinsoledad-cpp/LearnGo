@@ -29,7 +29,8 @@ func (s CommonServerSuite) Options() []server.Option {
 			prometheus.WithDisableServer(true),
 			prometheus.WithRegistry(mtl.Registry)),
 		),
-		// tracing中间件
+		
+		// traceing-OpenTelemetry
 		server.WithSuite(tracing.NewServerSuite()),
 	}
 

@@ -24,7 +24,7 @@ func ConsumerInit() {
 			klog.Error(err)
 		}
 
-		// OpenTelemetry
+		// traceing-OpenTelemetry
 		ctx := context.Background()
 		ctx = otel.GetTextMapPropagator().Extract(ctx, propagation.HeaderCarrier(msg.Header))
 		_, span := tracer.Start(ctx, "shop-email-consumer")

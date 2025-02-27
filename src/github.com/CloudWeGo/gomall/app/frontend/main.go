@@ -10,6 +10,8 @@ import (
 	"github.com/CloudWeGo/gomall/app/frontend/conf"
 	"github.com/CloudWeGo/gomall/app/frontend/infra/rpc"
 	"github.com/CloudWeGo/gomall/app/frontend/middleware"
+	frontendUtils "github.com/CloudWeGo/gomall/app/frontend/utils"
+	mtl "github.com/CloudWeGo/gomall/common/mtl"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -21,15 +23,13 @@ import (
 	"github.com/hertz-contrib/logger/accesslog"
 	hertzlogrus "github.com/hertz-contrib/logger/logrus"
 	prometheus "github.com/hertz-contrib/monitor-prometheus"
+	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"github.com/hertz-contrib/pprof"
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-
-	frontendUtils "github.com/CloudWeGo/gomall/app/frontend/utils"
-	mtl "github.com/CloudWeGo/gomall/common/mtl"
 )
 
 var (
@@ -40,12 +40,20 @@ var (
 
 func main() {
 	_ = godotenv.Load()
+	// traceing-OpenTelemetry
+	p := mtl.InitTracing(ServiceName)
+	defer p.Shutdown(context.Background())
 	// init dal
 	// dal.Init()
 	consul, registryInfo := mtl.InitMetric(ServiceName, MetricsPort, RegistryAddr)
 	defer consul.Deregister(registryInfo)
+
 	rpc.Init()
 	address := conf.GetConf().Hertz.Address
+
+	// traceing-opentelemetry
+	tracer, cfg := hertztracing.NewServerTracer()
+	// h := server.Default(tracer)
 
 	h := server.New(server.WithHostPorts(address),
 		// prometheus中间件
@@ -53,7 +61,12 @@ func main() {
 			prometheus.WithDisableServer(true),
 			prometheus.WithRegistry(mtl.Registry),
 		)),
+		// traceing-opentelemetry
+		tracer,
 	)
+
+	// traceing-opentelemetry
+	h.Use(hertztracing.ServerMiddleware(cfg))
 
 	registerMiddleware(h)
 

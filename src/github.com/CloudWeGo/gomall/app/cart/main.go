@@ -31,7 +31,7 @@ func main() {
 	//prometheus中间件
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
 
-	//traing
+	// traceing-OpenTelemetry
 	p := mtl.InitTracing(ServiceName)
 	defer p.Shutdown(context.Background())
 

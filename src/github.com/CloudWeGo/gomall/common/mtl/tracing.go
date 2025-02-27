@@ -5,6 +5,7 @@ import (
 )
 
 func InitTracing(serviceName string) provider.OtelProvider {
+	// traceing-OpenTelemetry
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName(serviceName),
 		// provider.WithExportEndpoint("localhost:4317"),//可不写默认就是这个

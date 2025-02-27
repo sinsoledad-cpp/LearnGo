@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"net"
 	"time"
 
@@ -24,7 +25,9 @@ var (
 
 func main() {
 	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
-
+	// traceing-OpenTelemetry
+	p := mtl.InitTracing(ServiceName)
+	defer p.Shutdown(context.Background())
 	rpc.InitClient()
 	mq.Init()
 
