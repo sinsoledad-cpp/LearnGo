@@ -7,16 +7,24 @@ import (
 	"github.com/CloudWeGo/gomall/app/email/biz/consumer"
 	"github.com/CloudWeGo/gomall/app/email/conf"
 	"github.com/CloudWeGo/gomall/app/email/infra/mq"
+	"github.com/CloudWeGo/gomall/common/mtl"
+	"github.com/CloudWeGo/gomall/common/serversuite"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/email/emailservice"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	ServiceName  = conf.GetConf().Kitex.Service
+	RegistryAddr = conf.GetConf().Registry.RegistryAddress[0]
+)
+
 func main() {
+	mtl.InitMetric(ServiceName, conf.GetConf().Kitex.MetricsPort, RegistryAddr)
+
 	mq.Init()
 	consumer.Init()
 
@@ -38,10 +46,24 @@ func kitexInit() (opts []server.Option) {
 	}
 	opts = append(opts, server.WithServiceAddr(addr))
 
-	// service info
-	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
-		ServiceName: conf.GetConf().Kitex.Service,
-	}))
+	opts = append(opts, server.WithSuite(
+		serversuite.CommonServerSuite{
+			CurrentServiceName: ServiceName,
+			RegistryAddr:       RegistryAddr,
+		},
+	))
+
+	// // service info
+	// opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
+	// 	ServiceName: conf.GetConf().Kitex.Service,
+	// }))
+
+	// // consul
+	// r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// opts = append(opts, server.WithRegistry(r))
 
 	// klog
 	logger := kitexlogrus.NewLogger()

@@ -1,7 +1,7 @@
 kitex:
   service: "cart"
   address: "192.168.204.1:8083"
-  metrics_port: "192.168.204.1:8888"
+  metrics_port: "192.168.204.1:8093"
   log_level: info
   log_file_name: "log/kitex.log"
   log_max_size: 10
