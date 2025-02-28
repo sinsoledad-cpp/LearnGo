@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/CloudWeGo/gomall/app/product/biz/dal/mysql"
+	"github.com/CloudWeGo/gomall/app/product/biz/dal/redis"
 	"github.com/CloudWeGo/gomall/app/product/biz/model"
 	product "github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/product"
 	"github.com/cloudwego/kitex/pkg/kerrors"
@@ -23,7 +24,8 @@ func (s *GetProductService) Run(req *product.GetProductReq) (resp *product.GetPr
 		return nil, kerrors.NewGRPCBizStatusError(2004001, "product id is empty")
 	}
 
-	productQuery := model.NewProductQuery(s.ctx, mysql.DB)
+	// productQuery := model.NewProductQuery(s.ctx, mysql.DB)
+	productQuery := model.NewCachedProductQuery(s.ctx, mysql.DB, redis.RedisClient)
 	p, err := productQuery.GetById(int(req.Id))
 	if err != nil {
 		return nil, err
