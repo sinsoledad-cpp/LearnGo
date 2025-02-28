@@ -1,6 +1,7 @@
 package rpc
 
 import (
+	"context"
 	"sync"
 
 	"github.com/CloudWeGo/gomall/app/frontend/conf"
@@ -9,9 +10,13 @@ import (
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/order/orderservice"
+	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/product"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"github.com/CloudWeGo/gomall/rpc_gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/circuitbreak"
+	"github.com/cloudwego/kitex/pkg/fallback"
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
 )
 
 var (
@@ -50,6 +55,19 @@ func initUserClient() {
 }
 
 func initProductClient() {
+	//熔断策略
+	cbs := circuitbreak.NewCBSuite(func(ri rpcinfo.RPCInfo) string {
+		return circuitbreak.RPCInfo2Key(ri)
+	})
+
+	cbs.UpdateServiceCBConfig(
+		"shop-frontend/product/GetProduct",
+		circuitbreak.CBConfig{
+			Enable:    true,
+			ErrRate:   0.5,
+			MinSample: 2,
+		})
+
 	// var opts []client.Option
 	// r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
 	// frontendUtils.MustHandleError(err)
@@ -60,6 +78,32 @@ func initProductClient() {
 			CurrentServiceName: ServiceName,
 			RegistryAddr:       RegistryAddr,
 		}),
+		//熔断策略
+		client.WithCircuitBreaker(cbs),
+		// Fallback
+		client.WithFallback(
+			fallback.NewFallbackPolicy(
+				fallback.UnwrapHelper(
+					func(ctx context.Context, req, resp interface{}, err error) (fbResp interface{}, fbErr error) {
+						methodName := rpcinfo.GetRPCInfo(ctx).To().Method()
+						if err == nil {
+							return resp, err
+						}
+						if methodName != "ListProducts" {
+							return resp, err
+						}
+						return &product.ListProductsResp{
+							Products: []*product.Product{
+								{
+									Price:       6.6,
+									Id:          3,
+									Picture:     "/static/image/t-shirt.jpeg",
+									Name:        "T-Shirt",
+									Description: "CloudWeGo T-Shirt",
+								},
+							},
+						}, nil
+					}))),
 	)
 	frontendUtils.MustHandleError(err)
 }
