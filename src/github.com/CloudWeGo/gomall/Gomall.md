@@ -153,9 +153,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 ## 特殊第三方库
 
-模拟支付：`go get github.com/durango/go-credit-card`
+### 模拟支付
+
+`go get github.com/durango/go-credit-card`
 
 ![结算支付](image/结算支付.png)
+
+### 模拟邮箱
 
 [nats golang sdk](https://github.com/nats-io/nats.go)
 
@@ -172,3 +176,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 [ketix-contrib opentelemetry](https://github.com/kitex-contrib/obs-opentelemetry)
 
 [gorm opentelemetry](https://github.com/go-gorm/opentelemetry)
+
+### log
+
+https://github.com/hertz-contrib/logger
+
+https://github.com/hertz-contrib/obs-opentelemetry
