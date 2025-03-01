@@ -17,6 +17,8 @@ import (
 	"github.com/cloudwego/kitex/pkg/circuitbreak"
 	"github.com/cloudwego/kitex/pkg/fallback"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	consulclient "github.com/kitex-contrib/config-consul/client"
+	"github.com/kitex-contrib/config-consul/consul"
 )
 
 var (
@@ -68,6 +70,7 @@ func initProductClient() {
 			MinSample: 2,
 		})
 
+	consulClient, err := consul.NewClient(consul.Options{})
 	// var opts []client.Option
 	// r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
 	// frontendUtils.MustHandleError(err)
@@ -104,6 +107,7 @@ func initProductClient() {
 							},
 						}, nil
 					}))),
+		client.WithSuite(consulclient.NewSuite("product", ServiceName, consulClient)), //服务治理与配置中心集成
 	)
 	frontendUtils.MustHandleError(err)
 }
